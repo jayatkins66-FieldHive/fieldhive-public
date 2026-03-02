@@ -14,6 +14,7 @@
       --muted: #9fb3d1;
       --border: #1f3a68;
       --success: #00e676;
+      --error: #ff6b6b;
     }
 
     * {
@@ -38,9 +39,6 @@
     }
 
     .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
       font-size: 28px;
       font-weight: bold;
       color: white;
@@ -100,7 +98,6 @@
       margin-right: 15px;
       border-radius: 10px;
       font-weight: bold;
-      transition: 0.2s;
     }
 
     .btn-primary {
@@ -139,7 +136,7 @@
       color: var(--accent);
     }
 
-    .features {
+    .features, .resident-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 25px;
@@ -155,12 +152,6 @@
     .card h3 {
       margin-bottom: 10px;
       color: var(--accent);
-    }
-
-    .resident-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 30px;
     }
 
     select, input, textarea, button {
@@ -181,6 +172,11 @@
       border: none;
     }
 
+    .msg {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
     footer {
       text-align: center;
       padding: 30px;
@@ -195,7 +191,7 @@
 <header>
   <div class="logo">Field<span>Hive</span></div>
   <div class="nav-buttons">
-    <a href="https://fieldhive-portal.onrender.com" class="btn-gov">Government Access</a>
+    <a href="https://fieldhive-portal.onrender.com" class="btn-gov">Government Portal</a>
     <a href="https://admin.fieldhive.us" class="btn-admin">Admin</a>
   </div>
 </header>
@@ -207,14 +203,13 @@
       <span>Built for Governments. Trusted by Communities.</span>
     </h1>
     <p>
-      FieldHive centralizes public alerts, anonymous tips, resident reports,
-      and official bulletins into one secure civic platform for cities,
-      counties, police, EMA, and public agencies.
+      FieldHive centralizes alerts, tips, reports, and official bulletins into one
+      secure civic ecosystem for cities, counties, police, EMA, and residents.
     </p>
 
     <div class="cta-buttons">
       <a href="https://fieldhive-portal.onrender.com" class="btn-primary">Government Portal</a>
-      <a href="#resident" class="btn-secondary">Resident Alerts & Reports</a>
+      <a href="#resident" class="btn-secondary">Resident Services</a>
     </div>
   </div>
 
@@ -224,54 +219,43 @@
   </div>
 </section>
 
-<section class="section">
-  <h2>How FieldHive Works</h2>
-  <div class="features">
-    <div class="card">
-      <h3>📢 Official Alerts</h3>
-      <p>Real-time public notifications directly from verified government agencies.</p>
-    </div>
-    <div class="card">
-      <h3>🛠 Department Routing</h3>
-      <p>Resident issues are automatically routed to the correct department.</p>
-    </div>
-    <div class="card">
-      <h3>🕵️ Anonymous Tips</h3>
-      <p>Secure tip submission for public safety without revealing identity.</p>
-    </div>
-    <div class="card">
-      <h3>🏛 Civic Oversight</h3>
-      <p>Transparent reporting and accountability through centralized communication logs.</p>
-    </div>
-  </div>
-</section>
-
 <section id="resident" class="section">
-  <h2>Resident Services</h2>
+  <h2>Resident Civic Services</h2>
 
   <div class="resident-grid">
 
+    <!-- SUBSCRIBE -->
     <div class="card">
-      <h3>Subscribe to Alerts</h3>
+      <h3>📢 Subscribe to Alerts</h3>
       <select id="citySelect"></select>
       <input type="email" id="email" placeholder="Email (optional)">
       <button onclick="subscribe()">Subscribe</button>
-      <p id="subMsg"></p>
+      <p id="subMsg" class="msg"></p>
     </div>
 
+    <!-- TIP -->
     <div class="card">
-      <h3>Submit Anonymous Tip</h3>
+      <h3>🕵️ Submit Anonymous Tip</h3>
       <textarea id="tipText" rows="4" placeholder="Enter tip details"></textarea>
       <button onclick="submitTip()">Submit Tip</button>
-      <p id="tipMsg"></p>
+      <p id="tipMsg" class="msg"></p>
     </div>
 
+    <!-- REPORT -->
     <div class="card">
-      <h3>Report an Issue</h3>
+      <h3>🛠 Report an Issue</h3>
       <input type="text" id="reportTitle" placeholder="Issue Title">
       <textarea id="reportDesc" rows="4" placeholder="Describe the issue"></textarea>
+
+      <select id="department">
+        <option value="Public Works">Public Works</option>
+        <option value="Police">Police</option>
+        <option value="Utilities">Utilities</option>
+        <option value="General">General</option>
+      </select>
+
       <button onclick="submitReport()">Submit Report</button>
-      <p id="reportMsg"></p>
+      <p id="reportMsg" class="msg"></p>
     </div>
 
   </div>
@@ -288,7 +272,8 @@ async function loadStatus() {
   try {
     const res = await fetch(API + "/api/health");
     const data = await res.json();
-    document.getElementById("apiStatus").textContent = JSON.stringify(data, null, 2);
+    document.getElementById("apiStatus").textContent =
+      JSON.stringify(data, null, 2);
   } catch {
     document.getElementById("apiStatus").textContent = "Core API Offline";
   }
@@ -299,42 +284,82 @@ async function loadCities() {
     const res = await fetch(API + "/api/cities");
     const cities = await res.json();
     const select = document.getElementById("citySelect");
-    select.innerHTML = cities.map(c => `<option value="${c}">${c}</option>`).join("");
+
+    if (!cities.length) {
+      select.innerHTML = "<option>No cities available</option>";
+      return;
+    }
+
+    select.innerHTML = cities.map(
+      c => `<option value="${c}">${c}</option>`
+    ).join("");
   } catch {
-    document.getElementById("citySelect").innerHTML = "<option>City load failed</option>";
+    document.getElementById("citySelect").innerHTML =
+      "<option>City load failed</option>";
   }
 }
 
 async function subscribe() {
   const city = document.getElementById("citySelect").value;
   const email = document.getElementById("email").value;
-  const res = await fetch(API + "/api/subscribe", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ city, email })
-  });
-  document.getElementById("subMsg").textContent = "Subscription saved.";
+
+  try {
+    await fetch(API + "/api/subscribe", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ city, email })
+    });
+
+    document.getElementById("subMsg").textContent =
+      "Subscription saved successfully.";
+    document.getElementById("subMsg").style.color = "#00e676";
+  } catch {
+    document.getElementById("subMsg").textContent =
+      "Subscription failed.";
+    document.getElementById("subMsg").style.color = "#ff6b6b";
+  }
 }
 
 async function submitTip() {
-  const text = document.getElementById("tipText").value;
-  await fetch(API + "/api/tips", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ text })
-  });
-  document.getElementById("tipMsg").textContent = "Tip submitted.";
+  const message = document.getElementById("tipText").value;
+
+  try {
+    await fetch(API + "/api/tips", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ message }) // FIXED (was text)
+    });
+
+    document.getElementById("tipMsg").textContent =
+      "Tip submitted successfully.";
+    document.getElementById("tipMsg").style.color = "#00e676";
+  } catch {
+    document.getElementById("tipMsg").textContent =
+      "Tip submission failed.";
+    document.getElementById("tipMsg").style.color = "#ff6b6b";
+  }
 }
 
 async function submitReport() {
   const title = document.getElementById("reportTitle").value;
   const description = document.getElementById("reportDesc").value;
-  await fetch(API + "/api/reports", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ title, description })
-  });
-  document.getElementById("reportMsg").textContent = "Report submitted.";
+  const department = document.getElementById("department").value;
+
+  try {
+    await fetch(API + "/api/reports", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ title, description, department }) // FIXED
+    });
+
+    document.getElementById("reportMsg").textContent =
+      "Report submitted successfully.";
+    document.getElementById("reportMsg").style.color = "#00e676";
+  } catch {
+    document.getElementById("reportMsg").textContent =
+      "Report submission failed.";
+    document.getElementById("reportMsg").style.color = "#ff6b6b";
+  }
 }
 
 loadStatus();
