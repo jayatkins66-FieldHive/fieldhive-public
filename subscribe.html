@@ -1,262 +1,96 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FieldHive — Resident Alerts & Community Access</title>
-  <link rel="icon" href="/logo.svg" />
-
-  <style>
-    :root {
-      --bg: #061b34;
-      --card: #0d2a4a;
-      --accent: #f4b400;
-      --text: #e6eef8;
-      --muted: #9fb3c8;
-      --border: #1e3a5f;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Segoe UI", system-ui, sans-serif;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    header {
-      padding: 20px 40px;
-      border-bottom: 2px solid var(--accent);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #072041;
-    }
-
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-    }
-
-    .btn {
-      padding: 10px 18px;
-      border-radius: 8px;
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 60px 20px;
-    }
-
-    h1 {
-      font-size: 42px;
-      margin-bottom: 15px;
-    }
-
-    p {
-      color: var(--muted);
-      margin-bottom: 30px;
-      font-size: 18px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 30px;
-      margin-top: 40px;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      padding: 30px;
-      border-radius: 16px;
-    }
-
-    .card h2 {
-      color: var(--accent);
-      margin-bottom: 15px;
-    }
-
-    select, input {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      margin-bottom: 15px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: #041427;
-      color: white;
-    }
-
-    button {
-      width: 100%;
-      padding: 14px;
-      border-radius: 10px;
-      border: none;
-      background: var(--accent);
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    button:hover {
-      opacity: 0.9;
-    }
-
-    footer {
-      text-align: center;
-      padding: 30px;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      margin-top: 60px;
-    }
-  </style>
-
+  <title>FieldHive — Resident Hub</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<header>
-  <div class="logo">🐝 FieldHive — Community Access</div>
-  <a class="btn" href="/">Back to Main Site</a>
-</header>
+  <header class="header">
+    <div class="header-left">
+      <img src="logo.svg" class="logo" alt="FieldHive Logo"/>
+      <div>
+        <h1>FieldHive Resident Hub</h1>
+        <p class="subtitle">Public Civic Communication & Alerts System</p>
+      </div>
+    </div>
+    <div class="status" id="apiStatus">Connecting...</div>
+  </header>
 
-<div class="container">
-  <h1>Stay Connected to Your Community</h1>
-  <p>
-    Subscribe to real-time alerts, submit anonymous tips, and report local issues
-    directly to verified government agencies through the FieldHive Civic System.
-  </p>
+  <main class="container">
 
-  <div class="grid">
+    <!-- ALERT SUBSCRIPTIONS -->
+    <section class="card">
+      <h2>Subscribe to Civic Alerts</h2>
+      <p class="note">
+        Receive official city alerts, bulletins, and emergency notifications in real-time.
+      </p>
 
-```
-<!-- ALERT SUBSCRIBE -->
-<div class="card">
-  <h2>📢 Subscribe to Alerts</h2>
-  <label>Select Your City</label>
-  <select id="citySelect">
-    <option>Loading cities...</option>
-  </select>
+      <form id="subscribeForm">
+        <label>Select Your City</label>
+        <select id="citySelect" required>
+          <option value="">Loading cities...</option>
+        </select>
 
-  <label>Email (optional)</label>
-  <input type="email" id="email" placeholder="you@example.com"/>
+        <label>Email (optional)</label>
+        <input type="email" id="emailInput" placeholder="you@example.com" />
 
-  <button onclick="subscribe()">Subscribe to Civic Alerts</button>
-</div>
+        <button type="submit">Subscribe to Alerts</button>
+      </form>
 
-<!-- ANONYMOUS TIPS -->
-<div class="card">
-  <h2>🕵️ Anonymous Tip</h2>
-  <label>City</label>
-  <select id="tipCity">
-    <option>Loading cities...</option>
-  </select>
+      <div id="subscribeStatus"></div>
+    </section>
 
-  <label>Tip Details</label>
-  <input type="text" id="tipText" placeholder="Enter tip details"/>
+    <!-- RESIDENT REPORTS -->
+    <section class="card">
+      <h2>Submit a Resident Report</h2>
+      <p class="note">
+        Report issues directly to the appropriate city department.
+      </p>
 
-  <button onclick="submitTip()">Submit Anonymous Tip</button>
-</div>
+      <form id="reportForm">
+        <input type="text" id="reportTitle" placeholder="Issue Title" required />
+        <textarea id="reportDescription" placeholder="Describe the issue..." required></textarea>
 
-<!-- REPORT ISSUE -->
-<div class="card">
-  <h2>🛠️ Report an Issue</h2>
-  <label>City</label>
-  <select id="reportCity">
-    <option>Loading cities...</option>
-  </select>
+        <select id="departmentSelect" required>
+          <option value="Public Works">Public Works</option>
+          <option value="Police">Police</option>
+          <option value="Utilities">Utilities</option>
+          <option value="Parks & Recreation">Parks & Recreation</option>
+          <option value="Other">Other</option>
+        </select>
 
-  <label>Issue Description</label>
-  <input type="text" id="reportText" placeholder="Pothole, outage, etc."/>
+        <button type="submit">Submit Report</button>
+      </form>
 
-  <button onclick="submitReport()">Submit Report</button>
-</div>
-```
+      <div id="reportStatus"></div>
+    </section>
 
-  </div>
-</div>
+    <!-- ANONYMOUS TIPS -->
+    <section class="card">
+      <h2>Submit an Anonymous Tip</h2>
+      <p class="note">
+        Send confidential information directly to civic oversight systems.
+      </p>
 
-<footer>
-  © 2026 FieldHive Civic Infrastructure Platform  
-  Trusted Communication Between Governments & Communities
-</footer>
+      <form id="tipForm">
+        <textarea id="tipMessage" placeholder="Enter your tip..." required></textarea>
+        <button type="submit">Submit Tip</button>
+      </form>
 
-<script>
-const API_BASE = "https://fieldhive-core.onrender.com";
+      <div id="tipStatus"></div>
+    </section>
 
-async function loadCities() {
-  try {
-    const res = await fetch(`${API_BASE}/api/cities`);
-    const cities = await res.json();
+    <!-- LIVE BULLETINS -->
+    <section class="card">
+      <h2>Official Civic Bulletins</h2>
+      <div id="bulletinsContainer">Loading bulletins...</div>
+    </section>
 
-    const selects = ["citySelect", "tipCity", "reportCity"];
-    selects.forEach(id => {
-      const el = document.getElementById(id);
-      el.innerHTML = "";
-      cities.forEach(city => {
-        const option = document.createElement("option");
-        option.value = city.name || city;
-        option.textContent = city.name || city;
-        el.appendChild(option);
-      });
-    });
-  } catch (err) {
-    console.error("Failed to load cities", err);
-  }
-}
+  </main>
 
-async function subscribe() {
-  const city = document.getElementById("citySelect").value;
-  const email = document.getElementById("email").value;
-
-  await fetch(`${API_BASE}/api/subscribe`, {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ city, email })
-  });
-
-  alert("Subscribed successfully!");
-}
-
-async function submitTip() {
-  const city = document.getElementById("tipCity").value;
-  const text = document.getElementById("tipText").value;
-
-  await fetch(`${API_BASE}/api/tips`, {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ city, text })
-  });
-
-  alert("Anonymous tip submitted.");
-}
-
-async function submitReport() {
-  const city = document.getElementById("reportCity").value;
-  const text = document.getElementById("reportText").value;
-
-  await fetch(`${API_BASE}/api/reports`, {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ city, text })
-  });
-
-  alert("Report submitted to local departments.");
-}
-
-loadCities();
-</script>
-
+  <script src="subscribe.js"></script>
 </body>
 </html>
