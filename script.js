@@ -88,7 +88,7 @@ PUSH NOTIFICATIONS
 */
 
 // 🔴 PASTE YOUR REAL VAPID PUBLIC KEY BELOW
-const VAPID_PUBLIC_KEY = BKIB3cGEzn2YpX1dKXQ-lsbUxpbOKFJo_nOsSs5gXUNa5XiLp1GH8tSGpLnRw6Ps7De2NAxbeMq60nV0PKz4lbA;
+const VAPID_PUBLIC_KEY = "BKIB3cGEzn2YpX1dKXQ-lsbUxpbOKFJo_nOsSs5gXUNa5XiLp1GH8tSGpLnRw6Ps7De2NAxbeMq60nV0PKz4lbA";
 
 function urlBase64ToUint8Array(base64String) {
   const padding = "=".repeat((4 - base64String.length % 4) % 4);
