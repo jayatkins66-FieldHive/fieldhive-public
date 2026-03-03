@@ -17,188 +17,132 @@
       --error: #ff6b6b;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Segoe UI", Arial, sans-serif;
-    }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:"Segoe UI",Arial,sans-serif; }
 
     body {
-      background: linear-gradient(180deg, #071326 0%, #020617 100%);
+      background: linear-gradient(180deg,#071326 0%,#020617 100%);
       color: var(--text);
     }
 
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 40px;
-      border-bottom: 2px solid var(--border);
-      background: #071326;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:20px 40px;
+      border-bottom:2px solid var(--border);
+      background:#071326;
     }
 
-    .logo {
-      font-size: 28px;
-      font-weight: bold;
-      color: white;
-    }
-
-    .logo span {
-      color: var(--accent);
-    }
+    .logo { font-size:28px; font-weight:bold; color:white; }
+    .logo span { color:var(--accent); }
 
     .nav-buttons a {
-      text-decoration: none;
-      margin-left: 12px;
-      padding: 10px 18px;
-      border-radius: 8px;
-      font-weight: 600;
-      transition: 0.2s;
+      text-decoration:none;
+      margin-left:12px;
+      padding:10px 18px;
+      border-radius:8px;
+      font-weight:600;
+      transition:0.2s;
     }
 
-    .btn-gov {
-      background: var(--accent);
-      color: #000;
-    }
-
-    .btn-admin {
-      border: 2px solid var(--accent);
-      color: var(--accent);
-    }
+    .btn-gov { background:var(--accent); color:#000; }
+    .btn-admin { border:2px solid var(--accent); color:var(--accent); }
 
     .hero {
-      padding: 90px 40px 70px 40px;
-      text-align: center;
-      max-width: 1100px;
-      margin: auto;
+      padding:90px 40px 70px;
+      text-align:center;
+      max-width:1100px;
+      margin:auto;
     }
 
-    .hero h1 {
-      font-size: 44px;
-      line-height: 1.25;
-      margin-bottom: 20px;
-    }
-
-    .hero h1 span {
-      color: var(--accent);
-      display: block;
-      margin-top: 10px;
-    }
+    .hero h1 { font-size:44px; line-height:1.25; margin-bottom:20px; }
+    .hero h1 span { color:var(--accent); display:block; margin-top:10px; }
 
     .hero p {
-      color: var(--muted);
-      font-size: 19px;
-      margin-bottom: 35px;
-      max-width: 750px;
-      margin-left: auto;
-      margin-right: auto;
+      color:var(--muted);
+      font-size:19px;
+      margin-bottom:35px;
+      max-width:750px;
+      margin-left:auto;
+      margin-right:auto;
     }
 
     .cta-buttons a {
-      text-decoration: none;
-      padding: 16px 28px;
-      margin: 10px;
-      border-radius: 12px;
-      font-weight: bold;
-      font-size: 16px;
-      display: inline-block;
+      text-decoration:none;
+      padding:16px 28px;
+      margin:10px;
+      border-radius:12px;
+      font-weight:bold;
+      font-size:16px;
+      display:inline-block;
     }
 
-    .btn-primary {
-      background: var(--accent);
-      color: black;
-    }
+    .btn-primary { background:var(--accent); color:black; }
+    .btn-secondary { border:2px solid var(--accent); color:var(--accent); }
 
-    .btn-secondary {
-      border: 2px solid var(--accent);
-      color: var(--accent);
-    }
-
-    .section {
-      padding: 70px 40px;
-      border-top: 1px solid var(--border);
-    }
-
-    .section h2 {
-      text-align: center;
-      font-size: 34px;
-      margin-bottom: 40px;
-      color: var(--accent);
-    }
+    .section { padding:70px 40px; border-top:1px solid var(--border); }
+    .section h2 { text-align:center; font-size:34px; margin-bottom:40px; color:var(--accent); }
 
     .bulletins-container {
-      max-width: 900px;
-      margin: auto;
-      display: grid;
-      gap: 20px;
+      max-width:900px;
+      margin:auto;
+      display:grid;
+      gap:20px;
     }
 
     .bulletin {
-      background: var(--card);
-      padding: 20px;
-      border-radius: 14px;
-      border-left: 5px solid var(--accent);
-      border: 1px solid var(--border);
+      background:var(--card);
+      padding:20px;
+      border-radius:14px;
+      border-left:5px solid var(--accent);
+      border:1px solid var(--border);
     }
 
-    .bulletin h3 {
-      margin-bottom: 8px;
-      color: var(--accent);
-    }
+    .bulletin h3 { margin-bottom:8px; color:var(--accent); }
+    .bulletin p { color:var(--muted); }
 
-    .bulletin p {
-      color: var(--muted);
-    }
-
-    .features, .resident-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
-      max-width: 1100px;
-      margin: auto;
+    .resident-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:25px;
+      max-width:1100px;
+      margin:auto;
     }
 
     .card {
-      background: var(--card);
-      padding: 25px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
+      background:var(--card);
+      padding:25px;
+      border-radius:14px;
+      border:1px solid var(--border);
     }
 
-    .card h3 {
-      margin-bottom: 10px;
-      color: var(--accent);
-    }
+    .card h3 { margin-bottom:10px; color:var(--accent); }
 
-    select, input, textarea, button {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: #020617;
-      color: white;
-      margin-top: 10px;
+    select,input,textarea,button {
+      width:100%;
+      padding:12px;
+      border-radius:8px;
+      border:1px solid var(--border);
+      background:#020617;
+      color:white;
+      margin-top:10px;
     }
 
     button {
-      background: var(--accent);
-      color: black;
-      font-weight: bold;
-      cursor: pointer;
-      border: none;
+      background:var(--accent);
+      color:black;
+      font-weight:bold;
+      cursor:pointer;
+      border:none;
     }
 
-    .msg {
-      margin-top: 10px;
-      font-size: 14px;
-    }
+    .msg { margin-top:10px; font-size:14px; }
 
     footer {
-      text-align: center;
-      padding: 30px;
-      color: var(--muted);
-      border-top: 1px solid var(--border);
+      text-align:center;
+      padding:30px;
+      color:var(--muted);
+      border-top:1px solid var(--border);
     }
   </style>
 </head>
@@ -219,19 +163,11 @@
     <span>Built for Governments. Trusted by Communities.</span>
   </h1>
   <p>
-    FieldHive is a centralized civic communication platform that delivers
-    real-time alerts, anonymous tips, department-routed reports, and official
-    government bulletins — all in one secure and transparent system designed
-    for cities, counties, police, EMA, and residents.
+    Real-time alerts, anonymous tips, department-routed reports, and official
+    government bulletins — unified into one transparent civic system.
   </p>
-
-  <div class="cta-buttons">
-    <a href="https://fieldhive-portal.onrender.com" class="btn-primary">Government Portal</a>
-    <a href="#resident" class="btn-secondary">Resident Services</a>
-  </div>
 </section>
 
-<!-- LIVE BULLETINS (NEW DEMO-CRITICAL SECTION) -->
 <section class="section">
   <h2>🚨 Live Civic Alerts & Official Bulletins</h2>
   <div id="bulletinsContainer" class="bulletins-container">
@@ -239,21 +175,20 @@
   </div>
 </section>
 
-<section id="resident" class="section">
+<section class="section">
   <h2>Resident Civic Services</h2>
 
   <div class="resident-grid">
 
-    <!-- SUBSCRIBE -->
     <div class="card">
       <h3>📢 Subscribe to Local Alerts</h3>
       <select id="citySelect"></select>
       <input type="email" id="email" placeholder="Email (optional)">
-      <button onclick="subscribe()">Subscribe</button>
+      <button onclick="subscribe()">Subscribe (Email)</button>
+      <button onclick="enablePush()">Enable Push Notifications</button>
       <p id="subMsg" class="msg"></p>
     </div>
 
-    <!-- TIP -->
     <div class="card">
       <h3>🕵️ Submit Anonymous Tip</h3>
       <textarea id="tipText" rows="4" placeholder="Enter tip details"></textarea>
@@ -261,19 +196,16 @@
       <p id="tipMsg" class="msg"></p>
     </div>
 
-    <!-- REPORT -->
     <div class="card">
       <h3>🛠 Report an Issue</h3>
       <input type="text" id="reportTitle" placeholder="Issue Title">
       <textarea id="reportDesc" rows="4" placeholder="Describe the issue"></textarea>
-
       <select id="department">
         <option value="Public Works">Public Works</option>
         <option value="Police">Police</option>
         <option value="Utilities">Utilities</option>
         <option value="General">General</option>
       </select>
-
       <button onclick="submitReport()">Submit Report</button>
       <p id="reportMsg" class="msg"></p>
     </div>
@@ -287,111 +219,101 @@
 
 <script>
 const API = "https://fieldhive-core.onrender.com";
+const VAPID_PUBLIC_KEY = "BKIB3cGEzn2YpX1dKXQ-lsbUxpbOKFJo_nOsSs5gXUNa5XiLp1GH8tSGpLnRw6Ps7De2NAxbeMq60nV0PKz4lbA";
+
+function urlBase64ToUint8Array(base64String) {
+  const padding = "=".repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
+  const rawData = window.atob(base64);
+  return Uint8Array.from([...rawData].map(c => c.charCodeAt(0)));
+}
 
 async function loadCities() {
-  try {
-    const res = await fetch(API + "/api/cities");
-    const cities = await res.json();
-    const select = document.getElementById("citySelect");
-
-    if (!cities.length) {
-      select.innerHTML = "<option>No cities available</option>";
-      return;
-    }
-
-    select.innerHTML = cities.map(
-      c => `<option value="${c}">${c}</option>`
-    ).join("");
-  } catch {
-    document.getElementById("citySelect").innerHTML =
-      "<option>City load failed</option>";
-  }
+  const res = await fetch(API + "/api/cities");
+  const cities = await res.json();
+  const select = document.getElementById("citySelect");
+  select.innerHTML = cities.map(c => `<option value="${c}">${c}</option>`).join("");
 }
 
 async function loadBulletins() {
-  try {
-    const res = await fetch(API + "/api/bulletins");
-    const bulletins = await res.json();
-    const container = document.getElementById("bulletinsContainer");
+  const res = await fetch(API + "/api/bulletins");
+  const bulletins = await res.json();
+  const container = document.getElementById("bulletinsContainer");
 
-    if (!bulletins.length) {
-      container.innerHTML = "<div class='bulletin'><h3>No Active Alerts</h3><p>There are currently no active civic alerts for your area.</p></div>";
-      return;
-    }
-
-    container.innerHTML = bulletins.map(b => `
-      <div class="bulletin">
-        <h3>${b.title}</h3>
-        <p>${b.content}</p>
-      </div>
-    `).join("");
-  } catch {
-    document.getElementById("bulletinsContainer").innerHTML =
-      "<div class='bulletin'><h3>Alert Feed Offline</h3><p>Unable to load official bulletins at this time.</p></div>";
+  if (!bulletins.length) {
+    container.innerHTML = "<div class='bulletin'><h3>No Active Alerts</h3></div>";
+    return;
   }
+
+  container.innerHTML = bulletins.map(b => `
+    <div class="bulletin">
+      <h3>${b.title}</h3>
+      <p>${b.content}</p>
+    </div>
+  `).join("");
 }
 
 async function subscribe() {
   const city = document.getElementById("citySelect").value;
   const email = document.getElementById("email").value;
 
-  try {
-    await fetch(API + "/api/subscribe", {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({ city, email })
-    });
+  await fetch(API + "/api/subscribe", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({ city,email })
+  });
 
-    document.getElementById("subMsg").textContent =
-      "Subscription saved successfully.";
-    document.getElementById("subMsg").style.color = "#00e676";
-  } catch {
-    document.getElementById("subMsg").textContent =
-      "Subscription failed.";
-    document.getElementById("subMsg").style.color = "#ff6b6b";
-  }
+  document.getElementById("subMsg").textContent="Email subscription saved.";
+  document.getElementById("subMsg").style.color="#00e676";
+}
+
+async function enablePush() {
+  const city = document.getElementById("citySelect").value;
+  if (!city) { alert("Select a city first."); return; }
+
+  const permission = await Notification.requestPermission();
+  if (permission !== "granted") { alert("Permission denied."); return; }
+
+  const registration = await navigator.serviceWorker.register("/sw.js");
+
+  const subscription = await registration.pushManager.subscribe({
+    userVisibleOnly:true,
+    applicationServerKey:urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
+  });
+
+  await fetch(API + "/api/push/subscribe", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({ city,subscription })
+  });
+
+  alert("Push notifications enabled!");
 }
 
 async function submitTip() {
   const message = document.getElementById("tipText").value;
-
-  try {
-    await fetch(API + "/api/tips", {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({ message })
-    });
-
-    document.getElementById("tipMsg").textContent =
-      "Tip submitted successfully.";
-    document.getElementById("tipMsg").style.color = "#00e676";
-  } catch {
-    document.getElementById("tipMsg").textContent =
-      "Tip submission failed.";
-    document.getElementById("tipMsg").style.color = "#ff6b6b";
-  }
+  await fetch(API + "/api/tips", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({ message })
+  });
+  document.getElementById("tipMsg").textContent="Tip submitted.";
+  document.getElementById("tipMsg").style.color="#00e676";
 }
 
 async function submitReport() {
-  const title = document.getElementById("reportTitle").value;
-  const description = document.getElementById("reportDesc").value;
-  const department = document.getElementById("department").value;
+  const title=document.getElementById("reportTitle").value;
+  const description=document.getElementById("reportDesc").value;
+  const department=document.getElementById("department").value;
 
-  try {
-    await fetch(API + "/api/reports", {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({ title, description, department })
-    });
+  await fetch(API + "/api/reports", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({ title,description,department })
+  });
 
-    document.getElementById("reportMsg").textContent =
-      "Report submitted successfully.";
-    document.getElementById("reportMsg").style.color = "#00e676";
-  } catch {
-    document.getElementById("reportMsg").textContent =
-      "Report submission failed.";
-    document.getElementById("reportMsg").style.color = "#ff6b6b";
-  }
+  document.getElementById("reportMsg").textContent="Report submitted.";
+  document.getElementById("reportMsg").style.color="#00e676";
 }
 
 loadCities();
