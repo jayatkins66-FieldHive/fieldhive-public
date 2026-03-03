@@ -31,15 +31,17 @@
       <form id="subscribeForm">
         <label>Select Your City</label>
         <select id="citySelect" required>
-          <div style="margin-top: 15px;">
-  <button type="button"
-          onclick="enablePush()"
-          style="padding:10px 15px; background:#f4b400; border:none; border-radius:5px; cursor:pointer;">
-    Enable Push Notifications
-  </button>
-</div>
           <option value="">Loading cities...</option>
         </select>
+
+        <!-- PUSH BUTTON -->
+        <div style="margin-top: 15px;">
+          <button type="button"
+                  onclick="enablePush()"
+                  style="padding:10px 15px; background:#f4b400; border:none; border-radius:5px; cursor:pointer;">
+            Enable Push Notifications
+          </button>
+        </div>
 
         <label>Email (optional)</label>
         <input type="email" id="emailInput" placeholder="you@example.com" />
