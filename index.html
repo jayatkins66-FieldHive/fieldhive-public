@@ -33,11 +33,10 @@
       background:#071326;
     }
 
-    /* UPDATED: allow logo image + text side by side */
+    /* FIXED HEADER BRAND LOCKUP */
     .logo {
       display:flex;
       align-items:center;
-      gap:12px;
       font-size:28px;
       font-weight:bold;
       color:white;
@@ -46,6 +45,7 @@
     .logo img {
       height:40px;
       width:auto;
+      margin-right:4px;
     }
 
     .logo span { color:var(--accent); }
@@ -164,11 +164,8 @@
 <body>
 
 <header>
-
-  <!-- UPDATED HEADER: logo + text together -->
   <div class="logo">
-    <img src="/logo.svg" alt="FieldHive Logo">
-    Field<span>Hive</span>
+    <img src="/logo.svg" alt="FieldHive Logo">Field<span>Hive</span>
   </div>
 
   <div class="nav-buttons">
