@@ -157,6 +157,15 @@
       padding:30px;
       color:var(--muted);
       border-top:1px solid var(--border);
+      /* FIELDHIVE ADD: alert subscription disclaimer */
+
+.alert-disclaimer{
+  font-size:12px;
+  margin-top:10px;
+  color:#9fb3d1;
+  line-height:1.4;
+  opacity:0.85;
+}
     }
   </style>
 </head>
@@ -202,7 +211,15 @@
       <select id="citySelect"></select>
       <input type="email" id="email" placeholder="Email (optional)">
       <input type="tel" id="phone" placeholder="Phone number for SMS (optional)" />
-      <button onclick="subscribe()">Subscribe (Email)</button>
+      <!-- FIELDHIVE ADD: notification disclaimer -->
+<div class="alert-disclaimer">
+  Notification availability depends on your local government's participation.
+  Some municipalities may only support certain notification methods
+  (Push Notifications, Email, or SMS). If your city has not yet activated
+  FieldHive services, you may still subscribe and will automatically begin
+  receiving alerts once your municipality connects.
+</div>
+      <button onclick="subscribe()">Subscribe to Alerts</button>
       <button onclick="enablePush()">Enable Push Notifications</button>
       <p id="subMsg" class="msg"></p>
     </div>
@@ -253,24 +270,39 @@ async function loadCities() {
   select.innerHTML = cities.map(c => `<option value="${c}">${c}</option>`).join("");
 }
 
-async function loadBulletins() {
-  const res = await fetch(API + "/api/bulletins");
-  const bulletins = await res.json();
-  const container = document.getElementById("bulletinsContainer");
+  async function subscribe() {
+  const city = document.getElementById("citySelect").value;
+  const email = document.getElementById("email").value;
+  const phone = document.getElementById("phone").value;
 
-  if (!bulletins.length) {
-    container.innerHTML = "<div class='bulletin'><h3>No Active Alerts</h3></div>";
-    return;
+  const res = await fetch(API + "/api/subscribe", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({ city, email, phone })
+  });
+
+  const data = await res.json();
+
+  const msg = document.getElementById("subMsg");
+
+  if(data.city_active === false){
+
+    msg.textContent =
+      "Your municipality has not fully activated FieldHive yet. " +
+      "You have been added to the alert list and will automatically " +
+      "begin receiving notifications once the city connects.";
+
+    msg.style.color = "#f5b942";
+
+  } else {
+
+    msg.textContent =
+      "Subscription successful. You will receive alerts when your municipality issues them.";
+
+    msg.style.color = "#00e676";
+
   }
-
-  container.innerHTML = bulletins.map(b => `
-    <div class="bulletin">
-      <h3>${b.title}</h3>
-      <p>${b.content}</p>
-    </div>
-  `).join("");
 }
-
 async function subscribe() {
   const city = document.getElementById("citySelect").value;
   const email = document.getElementById("email").value;
