@@ -53,6 +53,16 @@ body {
   flex-wrap: wrap;
 }
 
+/* FIELDHIVE ADD: alert disclaimer styling */
+
+.alert-disclaimer{
+  font-size:12px;
+  margin-top:10px;
+  color:#9fb3d9;
+  line-height:1.4;
+  opacity:0.85;
+}
+
 .hero-content {
   max-width: 650px;
 }
