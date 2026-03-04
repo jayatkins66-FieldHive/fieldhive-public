@@ -274,11 +274,12 @@ async function loadBulletins() {
 async function subscribe() {
   const city = document.getElementById("citySelect").value;
   const email = document.getElementById("email").value;
+  const phone = document.getElementById("phone").value;
 
   await fetch(API + "/api/subscribe", {
     method:"POST",
     headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({ city,email })
+    body: JSON.stringify({ city, email, phone })
   });
 
   document.getElementById("subMsg").textContent="Email subscription saved.";
