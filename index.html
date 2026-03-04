@@ -33,7 +33,21 @@
       background:#071326;
     }
 
-    .logo { font-size:28px; font-weight:bold; color:white; }
+    /* UPDATED: allow logo image + text side by side */
+    .logo {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-size:28px;
+      font-weight:bold;
+      color:white;
+    }
+
+    .logo img {
+      height:40px;
+      width:auto;
+    }
+
     .logo span { color:var(--accent); }
 
     .nav-buttons a {
@@ -151,9 +165,10 @@
 
 <header>
 
-  <!-- UPDATED LOGO (image instead of text) -->
+  <!-- UPDATED HEADER: logo + text together -->
   <div class="logo">
-    <img src="/logo.svg" alt="FieldHive Logo" style="height:40px;width:auto;">
+    <img src="/logo.svg" alt="FieldHive Logo">
+    Field<span>Hive</span>
   </div>
 
   <div class="nav-buttons">
