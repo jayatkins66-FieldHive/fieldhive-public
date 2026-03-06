@@ -327,39 +327,6 @@ async function loadCities() {
 
 }
 
-  async function subscribe() {
-  const city = document.getElementById("citySelect").value;
-  const email = document.getElementById("email").value;
-  const phone = document.getElementById("phone").value;
-
-  const res = await fetch(API + "/api/subscribe", {
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({ city, email, phone })
-  });
-
-  const data = await res.json();
-
-  const msg = document.getElementById("subMsg");
-
-  if(data.city_active === false){
-
-    msg.textContent =
-      "Your municipality has not fully activated FieldHive yet. " +
-      "You have been added to the alert list and will automatically " +
-      "begin receiving notifications once the city connects.";
-
-    msg.style.color = "#f5b942";
-
-  } else {
-
-    msg.textContent =
-      "Subscription successful. You will receive alerts when your municipality issues them.";
-
-    msg.style.color = "#00e676";
-
-  }
-}
 async function subscribe() {
   const city = document.getElementById("citySelect").value;
   const email = document.getElementById("email").value;
@@ -399,15 +366,19 @@ async function enablePush() {
 }
 
 async function submitTip() {
+
   const message = document.getElementById("tipText").value;
+  const org_id = document.getElementById("tipOrg")?.value || null;
+
   await fetch(API + "/api/tips", {
     method:"POST",
     headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({ message })
-    org_id: document.getElementById("tipOrg")?.value || null
+    body:JSON.stringify({ message, org_id })
   });
+
   document.getElementById("tipMsg").textContent="Tip submitted.";
   document.getElementById("tipMsg").style.color="#00e676";
+
 }
 
 async function submitReport() {
