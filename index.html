@@ -167,6 +167,14 @@
   opacity:0.85;
 }
     }
+
+    <link
+ rel="stylesheet"
+ href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
   </style>
 </head>
 
@@ -408,6 +416,55 @@ their communities.
 const API = "https://fieldhive-core.onrender.com";
 const VAPID_PUBLIC_KEY = "BKIB3cGEzn2YpX1dKXQ-lsbUxpbOKFJo_nOsSs5gXUNa5XiLp1GH8tSGpLnRw6Ps7De2NAxbeMq60nV0PKz4lbA";
 
+  function initMap(){
+
+  const map = L.map('civicMap').setView([40.5421, -84.3775], 13);
+
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    { attribution:'© OpenStreetMap' }
+  ).addTo(map);
+
+  loadActivity(map);
+
+}
+
+async function loadActivity(map){
+
+  const res = await fetch(API + "/api/activity");
+  const data = await res.json();
+
+  const defaultLat = 40.5421;
+  const defaultLng = -84.3775;
+
+  data.alerts.forEach(alert=>{
+    L.marker([defaultLat,defaultLng])
+      .addTo(map)
+      .bindPopup("🚨 Alert<br>"+alert.message);
+  });
+
+  data.reports.forEach(report=>{
+    L.marker([defaultLat,defaultLng])
+      .addTo(map)
+      .bindPopup("🛠 Report<br>"+report.title);
+  });
+
+  data.tips.forEach(tip=>{
+    L.marker([defaultLat,defaultLng])
+      .addTo(map)
+      .bindPopup("🕵️ Tip Received");
+  });
+
+  data.bulletins.forEach(b=>{
+    L.marker([defaultLat,defaultLng])
+      .addTo(map)
+      .bindPopup("📢 Bulletin<br>"+b.title);
+  });
+
+}
+
+initMap();
+  
 function urlBase64ToUint8Array(base64String) {
   const padding = "=".repeat((4 - base64String.length % 4) % 4);
   const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
