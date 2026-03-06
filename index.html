@@ -226,6 +226,15 @@
 
     <div class="card">
       <h3>🕵️ Submit Anonymous Tip</h3>
+      <!-- ===== FIELDHIVE ADDITION ===== -->
+<select id="tipCity">
+  <option value="">Select City</option>
+</select>
+
+<select id="tipOrg">
+  <option value="">General City Tip</option>
+</select>
+<!-- ===== FIELDHIVE ADDITION END ===== -->
       <textarea id="tipText" rows="4" placeholder="Enter tip details"></textarea>
       <button onclick="submitTip()">Submit Tip</button>
       <p id="tipMsg" class="msg"></p>
@@ -263,6 +272,46 @@ function urlBase64ToUint8Array(base64String) {
   return Uint8Array.from([...rawData].map(c => c.charCodeAt(0)));
 }
 
+  /* ===== FIELDHIVE ADDITION ===== */
+
+async function loadTipOrganizations(){
+
+  const city = document.getElementById("tipCity").value;
+
+  if(!city) return;
+
+  const res = await fetch(API + "/api/orgs/" + city);
+  const orgs = await res.json();
+
+  const orgSelect = document.getElementById("tipOrg");
+
+  orgSelect.innerHTML = '<option value="">General City Tip</option>';
+
+  orgs.forEach(org => {
+
+    const opt = document.createElement("option");
+
+    opt.value = org.id;
+    opt.textContent = org.name;
+
+    orgSelect.appendChild(opt);
+
+  });
+
+}
+
+document.addEventListener("change", function(e){
+
+  if(e.target && e.target.id === "tipCity"){
+
+    loadTipOrganizations();
+
+  }
+
+});
+
+/* ===== FIELDHIVE ADDITION END ===== */
+  
 async function loadCities() {
   const res = await fetch(API + "/api/cities");
   const cities = await res.json();
@@ -347,6 +396,7 @@ async function submitTip() {
     method:"POST",
     headers:{"Content-Type":"application/json"},
     body:JSON.stringify({ message })
+    org_id: document.getElementById("tipOrg")?.value || null
   });
   document.getElementById("tipMsg").textContent="Tip submitted.";
   document.getElementById("tipMsg").style.color="#00e676";
