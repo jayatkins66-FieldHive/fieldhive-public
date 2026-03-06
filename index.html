@@ -313,10 +313,18 @@ document.addEventListener("change", function(e){
 /* ===== FIELDHIVE ADDITION END ===== */
   
 async function loadCities() {
+
   const res = await fetch(API + "/api/cities");
   const cities = await res.json();
-  const select = document.getElementById("citySelect");
-  select.innerHTML = cities.map(c => `<option value="${c}">${c}</option>`).join("");
+
+  const mainSelect = document.getElementById("citySelect");
+  const tipSelect = document.getElementById("tipCity");
+
+  const options = cities.map(c => `<option value="${c}">${c}</option>`).join("");
+
+  if(mainSelect) mainSelect.innerHTML = options;
+  if(tipSelect) tipSelect.innerHTML = '<option value="">Select City</option>' + options;
+
 }
 
   async function subscribe() {
