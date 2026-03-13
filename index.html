@@ -326,6 +326,8 @@ and civic notices in real time.
 <li>Official bulletins</li>
 </ul>
 
+   <button onclick="startCheckout('basic')">Start Plan</button>
+  
 </div>
 
 
@@ -341,6 +343,8 @@ and civic notices in real time.
 <li>Department routing</li>
 <li>Admin dashboard</li>
 </ul>
+
+  <button onclick="startCheckout('professional')">Start Plan</button>
 
 </div>
 
@@ -358,6 +362,8 @@ and civic notices in real time.
 <li>Advanced analytics</li>
 <li>API integrations</li>
 </ul>
+
+  <button onclick="startCheckout('enterprise')">Start Plan</button>
 
 </div>
 
@@ -596,6 +602,24 @@ async function submitReport() {
   document.getElementById("reportMsg").style.color="#00e676";
 }
 
+  async function startCheckout(plan){
+
+  const res = await fetch(API + "/api/checkout",{
+    method:"POST",
+    headers:{
+      "Content-Type":"application/json"
+    },
+    body: JSON.stringify({ plan })
+  });
+
+  const data = await res.json();
+
+  if(data.url){
+    window.location = data.url;
+  }else{
+    alert("Checkout error
+
+          
 loadCities();
 loadBulletins();
 </script>
