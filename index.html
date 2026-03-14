@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FieldHive — Civic Communication Infrastructure</title>
 
+   <link
+ rel="stylesheet"
+ href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+  
   <style>
     :root {
       --bg: #071326;
@@ -168,10 +173,6 @@
 }
     }
 
-    <link
- rel="stylesheet"
- href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
@@ -250,21 +251,29 @@
       <p id="tipMsg" class="msg"></p>
     </div>
 
-    <div class="card">
-      <h3>🛠 Report an Issue</h3>
-      <input type="text" id="reportTitle" placeholder="Issue Title">
-      <textarea id="reportDesc" rows="4" placeholder="Describe the issue"></textarea>
-      <select id="department">
-        <option value="Public Works">Public Works</option>
-        <option value="Police">Police</option>
-        <option value="Utilities">Utilities</option>
-        <option value="General">General</option>
-      </select>
-      <button onclick="submitReport()">Submit Report</button>
-      <p id="reportMsg" class="msg"></p>
-    </div>
+   <div class="card">
+  <h3>🛠 Report an Issue</h3>
 
-  </div>
+  <select id="reportCity">
+    <option value="">Select City</option>
+  </select>
+
+  <input type="text" id="reportTitle" placeholder="Issue Title">
+
+  <textarea id="reportDesc" rows="4" placeholder="Describe the issue"></textarea>
+
+  <select id="department">
+    <option value="Public Works">Public Works</option>
+    <option value="Police">Police</option>
+    <option value="Utilities">Utilities</option>
+    <option value="General">General</option>
+  </select>
+
+  <button onclick="submitReport()">Submit Report</button>
+
+  <p id="reportMsg" class="msg"></p>
+</div>
+    
 </section>
 
   <section class="section">
@@ -520,18 +529,35 @@ document.addEventListener("change", function(e){
 
 /* ===== FIELDHIVE ADDITION END ===== */
   
-async function loadCities() {
+async function loadCities(){
 
   const res = await fetch(API + "/api/cities");
   const cities = await res.json();
 
-  const mainSelect = document.getElementById("citySelect");
-  const tipSelect = document.getElementById("tipCity");
+  const selects = [
+    document.getElementById("citySelect"),
+    document.getElementById("tipCity"),
+    document.getElementById("reportCity")
+  ];
 
-  const options = cities.map(c => `<option value="${c}">${c}</option>`).join("");
+  selects.forEach(select => {
 
-  if(mainSelect) mainSelect.innerHTML = options;
-  if(tipSelect) tipSelect.innerHTML = '<option value="">Select City</option>' + options;
+    if(!select) return;
+
+    select.innerHTML = '<option value="">Select City</option>';
+
+    cities.forEach(city => {
+
+      const option = document.createElement("option");
+
+      option.value = city;
+      option.textContent = city;
+
+      select.appendChild(option);
+
+    });
+
+  });
 
 }
 
@@ -589,19 +615,27 @@ async function submitTip() {
 
 }
 
-async function submitReport() {
-  const title=document.getElementById("reportTitle").value;
-  const description=document.getElementById("reportDesc").value;
-  const department=document.getElementById("department").value;
+async function submitReport(){
+
+  const city = document.getElementById("reportCity").value;
+  const title = document.getElementById("reportTitle").value;
+  const description = document.getElementById("reportDesc").value;
+  const department = document.getElementById("department").value;
 
   await fetch(API + "/api/reports", {
     method:"POST",
     headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({ title,description,department })
+    body:JSON.stringify({
+      city,
+      title,
+      description,
+      department
+    })
   });
 
   document.getElementById("reportMsg").textContent="Report submitted.";
   document.getElementById("reportMsg").style.color="#00e676";
+
 }
 
   async function startCheckout(plan){
