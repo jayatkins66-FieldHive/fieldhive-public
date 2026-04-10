@@ -83,11 +83,6 @@
       color: #000;
     }
 
-    .btn-admin {
-      border: 2px solid var(--accent);
-      color: var(--accent);
-    }
-
     .hero {
       padding: 90px 40px 70px;
       text-align: center;
@@ -346,7 +341,6 @@
 
   <div class="nav-buttons">
     <a href="https://fieldhive-portal.onrender.com" class="btn-gov">Government Portal</a>
-    <a href="https://admin.fieldhive.us" class="btn-admin">Admin</a>
   </div>
 </header>
 
@@ -609,11 +603,7 @@
       cityTargets.forEach(select => {
         if (!select) return;
 
-        const firstOption = select.id === "citySelect"
-          ? '<option value="">Select City</option>'
-          : '<option value="">Select City</option>';
-
-        select.innerHTML = firstOption;
+        select.innerHTML = '<option value="">Select City</option>';
 
         cities.forEach(city => {
           const option = document.createElement("option");
